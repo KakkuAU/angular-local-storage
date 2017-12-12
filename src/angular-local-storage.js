@@ -80,7 +80,7 @@ angular
       return this;
     };
 
-    this.$get = ['$rootScope', '$window', '$document', '$parse','$timeout', function($rootScope, $window, $document, $parse, $timeout) {
+    this.$get = ['$rootScope', '$window', '$document', '$parse', function($rootScope, $window, $document, $parse) {
       var self = this;
       var prefix = self.prefix;
       var cookie = self.cookie;
@@ -520,10 +520,7 @@ angular
             if (notify.setItem) {
                 if (isString(e.key) && isKeyPrefixOurs(e.key)) {
                     var key = underiveQualifiedKey(e.key);
-                    // Use timeout, to avoid using $rootScope.$apply.
-                    $timeout(function () {
-                        $rootScope.$broadcast('LocalStorageModule.notification.changed', { key: key, newvalue: e.newValue, storageType: self.storageType });
-                    });
+                    $rootScope.$broadcast('LocalStorageModule.notification.changed', { key: key, newvalue: e.newValue, storageType: self.storageType });
                 }
             }
         }
@@ -543,7 +540,7 @@ angular
                 count++;
               }
             }
-            
+
             return count;
           } finally {
             setStorageType(previousType);
